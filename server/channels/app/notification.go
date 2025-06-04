@@ -236,11 +236,17 @@ func (a *App) SendNotifications(c request.CTX, post *model.Post, team *model.Tea
 			if channel.Type != model.ChannelTypeDirect {
 				rootMentions = getExplicitMentions(rootPost, keywords)
 				for id := range rootMentions.Mentions {
+					if rootMentions.Mentions[id] == ChannelMention {
+						continue
+					}
 					threadParticipants[id] = true
 				}
 			}
 		}
 		for id := range mentions.Mentions {
+			if mentions.Mentions[id] == ChannelMention {
+				continue
+			}
 			threadParticipants[id] = true
 		}
 
